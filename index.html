@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos Proposal | Flutterアプリ開発（Android向け） — Achisana様</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3D;
+    --navy-deep:#071328;
+    --navy-light:#12305C;
+    --dart-blue:#13B9FD;
+    --indigo:#3F51B5;
+    --amber:#FFB300;
+    --paper:#F4F7FB;
+    --paper-dim:#E7EDF6;
+    --slate:#4A5568;
+    --line:rgba(19,185,253,0.18);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    font-family:'Noto Sans JP', sans-serif;
+    color:var(--slate);
+    background:var(--paper);
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,.mono-label{
+    font-family:'Space Grotesk', 'Noto Sans JP', sans-serif;
+  }
+
+  a{color:inherit;}
+
+  .container{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    background:var(--navy);
+    background-image:
+      linear-gradient(rgba(19,185,253,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(19,185,253,0.08) 1px, transparent 1px);
+    background-size:44px 44px;
+    color:var(--paper);
+    padding:100px 24px 120px;
+    overflow:hidden;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-120px;
+    right:-120px;
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle, rgba(19,185,253,0.25), transparent 70%);
+    border-radius:50%;
+  }
+
+  .hero-inner{
+    position:relative;
+    max-width:1080px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:48px;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .hero-text{
+    flex:1 1 480px;
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    letter-spacing:0.12em;
+    padding:8px 16px;
+    border:1px solid rgba(19,185,253,0.5);
+    border-radius:999px;
+    color:var(--dart-blue);
+    margin-bottom:28px;
+  }
+
+  .badge::before{
+    content:"";
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--dart-blue);
+    box-shadow:0 0 10px var(--dart-blue);
+  }
+
+  .hero h1{
+    font-size:clamp(28px, 4.4vw, 46px);
+    font-weight:700;
+    line-height:1.45;
+    margin-bottom:24px;
+  }
+
+  .hero h1 .accent{
+    color:var(--dart-blue);
+  }
+
+  .hero p{
+    font-size:15.5px;
+    color:#C6D6EA;
+    max-width:520px;
+  }
+
+  .hero-footnote{
+    margin-top:36px;
+    font-size:13px;
+    color:#7C93B8;
+    font-family:'Space Grotesk', monospace;
+    letter-spacing:0.04em;
+  }
+
+  /* code card decoration */
+  .code-card{
+    flex:0 0 340px;
+    background:var(--navy-deep);
+    border:1px solid rgba(19,185,253,0.25);
+    border-radius:14px;
+    padding:22px 22px 26px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.02);
+    transform:rotate(1.2deg);
+    font-family:'Space Grotesk', monospace;
+    font-size:12.5px;
+    line-height:1.9;
+  }
+
+  .code-dots{
+    display:flex;
+    gap:6px;
+    margin-bottom:14px;
+  }
+  .code-dots span{
+    width:9px;height:9px;border-radius:50%;
+    background:#31465F;
+  }
+  .code-dots span:nth-child(1){background:#FF6B6B;}
+  .code-dots span:nth-child(2){background:var(--amber);}
+  .code-dots span:nth-child(3){background:#4ADE80;}
+
+  .code-card .c1{color:#8FD9FF;}
+  .code-card .c2{color:var(--amber);}
+  .code-card .c3{color:#9AA9C2;}
+  .code-card .c4{color:#7CE7B0;}
+
+  /* ============ SECTION COMMON ============ */
+  section{
+    padding:88px 0;
+  }
+  .section-head{
+    max-width:680px;
+    margin-bottom:52px;
+  }
+  .kicker{
+    font-family:'Space Grotesk', monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    color:var(--indigo);
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(22px, 3.2vw, 32px);
+    color:var(--navy);
+    font-weight:700;
+    line-height:1.5;
+  }
+
+  /* ============ UNDERSTANDING ============ */
+  .understanding{
+    background:var(--paper-dim);
+    position:relative;
+  }
+  .quote-block{
+    background:#fff;
+    border-left:4px solid var(--dart-blue);
+    border-radius:0 14px 14px 0;
+    padding:32px 36px;
+    box-shadow:0 12px 40px rgba(11,30,61,0.08);
+    font-size:16px;
+    color:var(--navy);
+    max-width:760px;
+    margin-bottom:36px;
+  }
+  .quote-block strong{
+    color:var(--indigo);
+  }
+  .needs-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:16px;
+  }
+  .need-chip{
+    background:#fff;
+    border:1px solid #DCE6F5;
+    border-radius:10px;
+    padding:16px 18px;
+    font-size:13.5px;
+    color:var(--navy-light);
+    font-weight:500;
+  }
+  .need-chip .tag{
+    display:block;
+    font-family:'Space Grotesk', monospace;
+    font-size:11px;
+    color:var(--dart-blue);
+    margin-bottom:6px;
+    letter-spacing:0.06em;
+  }
+
+  /* ============ VALUE CARDS ============ */
+  .value-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:22px;
+  }
+  .value-card{
+    background:#fff;
+    border-radius:16px;
+    padding:30px 26px;
+    box-shadow:0 8px 24px rgba(11,30,61,0.06);
+    border:1px solid #E5ECF7;
+    position:relative;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .value-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(11,30,61,0.12);
+  }
+  .value-num{
+    font-family:'Space Grotesk', monospace;
+    font-size:12px;
+    color:var(--dart-blue);
+    letter-spacing:0.1em;
+    margin-bottom:16px;
+    display:block;
+  }
+  .value-icon{
+    width:44px;height:44px;
+    border-radius:12px;
+    margin-bottom:18px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+    color:#fff;
+  }
+  .value-card h3{
+    font-size:16.5px;
+    color:var(--navy);
+    margin-bottom:10px;
+    font-weight:700;
+  }
+  .value-card p{
+    font-size:13.5px;
+    color:var(--slate);
+  }
+
+  .ic1{background:linear-gradient(135deg,#13B9FD,#0175C2);}
+  .ic2{background:linear-gradient(135deg,#FFB300,#FF7A00);}
+  .ic3{background:linear-gradient(135deg,#3F51B5,#1A237E);}
+  .ic4{background:linear-gradient(135deg,#4ADE80,#059669);}
+  .ic5{background:linear-gradient(135deg,#8B5CF6,#5B21B6);}
+
+  /* ============ PROCESS ============ */
+  .process{
+    background:var(--navy);
+    color:var(--paper);
+  }
+  .process .section-head h2{color:#fff;}
+  .process .kicker{color:var(--dart-blue);}
+
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .step{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:20px;
+    position:relative;
+    padding-bottom:38px;
+  }
+  .step:last-child{padding-bottom:0;}
+  .step-num{
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--navy-light);
+    border:2px solid var(--dart-blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk', monospace;
+    font-weight:600;
+    color:var(--dart-blue);
+    z-index:2;
+  }
+  .step:not(:last-child)::before{
+    content:"";
+    position:absolute;
+    left:21px;
+    top:44px;
+    width:2px;
+    height:calc(100% - 44px);
+    background:linear-gradient(to bottom, var(--dart-blue), transparent);
+    opacity:0.4;
+  }
+  .step-body{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(19,185,253,0.15);
+    border-radius:12px;
+    padding:18px 22px;
+  }
+  .step-body .step-title{
+    font-weight:700;
+    font-size:15.5px;
+    color:#fff;
+    margin-bottom:6px;
+  }
+  .step-body .step-desc{
+    font-size:13px;
+    color:#AEC2DE;
+  }
+  .step-week{
+    font-family:'Space Grotesk', monospace;
+    font-size:11px;
+    color:var(--amber);
+    letter-spacing:0.08em;
+    margin-top:8px;
+    display:block;
+  }
+
+  /* ============ CLOSING ============ */
+  .closing{
+    background:linear-gradient(160deg, var(--navy-deep), var(--navy) 60%, var(--navy-light));
+    color:#fff;
+    text-align:center;
+    padding:110px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .closing::after{
+    content:"";
+    position:absolute;
+    bottom:-140px;
+    left:50%;
+    transform:translateX(-50%);
+    width:520px;height:520px;
+    background:radial-gradient(circle, rgba(19,185,253,0.18), transparent 70%);
+  }
+  .closing-inner{
+    position:relative;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .closing h2{
+    font-size:clamp(24px,4vw,34px);
+    margin-bottom:20px;
+    font-weight:700;
+    line-height:1.5;
+  }
+  .closing p{
+    color:#B9CBE4;
+    font-size:14.5px;
+    margin-bottom:38px;
+  }
+  .cta-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--dart-blue);
+    color:var(--navy-deep);
+    font-weight:700;
+    padding:16px 34px;
+    border-radius:999px;
+    text-decoration:none;
+    font-size:15px;
+    box-shadow:0 16px 40px rgba(19,185,253,0.35);
+    transition:transform .2s ease;
+  }
+  .cta-btn:hover{transform:translateY(-3px);}
+
+  .closing-sub{
+    margin-top:28px;
+    font-family:'Space Grotesk', monospace;
+    font-size:12px;
+    color:#6F87A9;
+    letter-spacing:0.06em;
+  }
+
+  footer{
+    background:var(--navy-deep);
+    color:#5A7295;
+    text-align:center;
+    padding:26px 20px;
+    font-size:12px;
+    font-family:'Space Grotesk', monospace;
+  }
+
+  @media (max-width:768px){
+    .hero{padding:70px 20px 90px;}
+    .hero-inner{flex-direction:column;}
+    .code-card{transform:none; width:100%;}
+    section{padding:64px 0;}
+    .step{grid-template-columns:44px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="badge">KAIROS PROPOSAL</span>
+        <h1>認証も、通知も、リリースも。<br>ひとつの<span class="accent">Flutter</span>で、<br>届く体験をつくります。</h1>
+        <p>
+          Achisana様が募集されている「Flutterアプリ開発（Android向け）」に対し、
+          Kairos（Web制作・システム開発チーム）よりご提案いたします。
+          Dart / Flutter の実装から Firebase 連携、Material Designに基づくUI設計、
+          Play Consoleへのリリースまで、一連の流れを一気通貫でお任せいただけます。
+        </p>
+        <div class="hero-footnote">// build → connect → notify → release → maintain</div>
+      </div>
+
+      <div class="code-card">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <div><span class="c3">// firebase_auth.dart</span></div>
+        <div><span class="c1">final</span> user = <span class="c1">await</span> FirebaseAuth</div>
+        <div>&nbsp;&nbsp;.instance.signInWithEmailAndPassword(</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;email: <span class="c2">"user@achisana.jp"</span>,</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;password: <span class="c2">"••••••••"</span>,</div>
+        <div>&nbsp;&nbsp;);</div>
+        <div style="margin-top:10px"><span class="c3">// fcm_push.dart</span></div>
+        <div>FirebaseMessaging.onMessage.listen((msg) {</div>
+        <div>&nbsp;&nbsp;<span class="c4">showNotification</span>(msg);</div>
+        <div>});</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UNDERSTANDING ============ -->
+  <section class="understanding">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Understanding the Brief</span>
+        <h2>今回のご依頼、拝見しました。</h2>
+      </div>
+
+      <div class="quote-block">
+        認証・データ登録・API通信・プッシュ通知という<strong>4つの機能を、単発の実装ではなく
+        「ひとつのアプリ体験」</strong>として仕上げること。Firebaseの3本柱（Authentication /
+        Firestore / FCM）を土台に、<strong>Material Designで使いやすく</strong>、
+        Gitでのブランチ運用・PR対応も含めた<strong>チーム開発に耐える品質</strong>で
+        納品すること——そして何より、<strong>長期的に付き合えるパートナー</strong>を
+        探していらっしゃること。これらを前提に、今回のご提案を組み立てました。
+      </div>
+
+      <div class="needs-grid">
+        <div class="need-chip"><span class="tag">AUTH</span>Firebase Authenticationによる安全なログイン導線</div>
+        <div class="need-chip"><span class="tag">DATA</span>Firestoreを用いたデータ登録・閲覧設計</div>
+        <div class="need-chip"><span class="tag">NOTIFY</span>FCMによるプッシュ通知の実装</div>
+        <div class="need-chip"><span class="tag">RELEASE</span>APK/AAB生成とPlay Console申請対応</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VALUE ============ -->
+  <section class="value">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">What Kairos Provides</span>
+        <h2>Kairosがご提供できる価値</h2>
+      </div>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <span class="value-num">01</span>
+          <div class="value-icon ic1">◆</div>
+          <h3>Flutter/Dartの実務実装力</h3>
+          <p>認証・データ登録・API通信・プッシュ通知を、個別機能としてではなく「一貫した体験」として設計・実装します。</p>
+        </div>
+        <div class="value-card">
+          <span class="value-num">02</span>
+          <div class="value-icon ic2">⚡</div>
+          <h3>Firebase三本柱の連携設計</h3>
+          <p>Authentication / Firestore / FCMを一体として設計し、拡張しやすいバックエンド構成を構築します。</p>
+        </div>
+        <div class="value-card">
+          <span class="value-num">03</span>
+          <div class="value-icon ic3">▦</div>
+          <h3>Material Designに基づくUI</h3>
+          <p>使いやすさとブランドの一貫性を両立したMaterial Designベースの画面構成をご提案します。</p>
+        </div>
+        <div class="value-card">
+          <span class="value-num">04</span>
+          <div class="value-icon ic4">⌥</div>
+          <h3>Git運用によるチーム開発対応</h3>
+          <p>Branch運用・Pull Requestを前提とした開発フローで、可読性・保守性の高いコードを積み上げます。</p>
+        </div>
+        <div class="value-card">
+          <span class="value-num">05</span>
+          <div class="value-icon ic5">▲</div>
+          <h3>リリース〜継続運用の実務対応</h3>
+          <p>APK/AAB生成、Play Console申請から、その後の継続的な機能追加・保守までお付き合いします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="process">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">How We Work</span>
+        <h2>進め方とスケジュールイメージ</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">要件ヒアリング・機能整理</div>
+            <div class="step-desc">認証・データ構造・通知要件・画面構成をすり合わせ、開発範囲を確定します。</div>
+            <span class="step-week">WEEK 1</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">画面設計・Firebase構成設計</div>
+            <div class="step-desc">Material Designに基づく画面設計と、Firestore/Authの構成を設計します。</div>
+            <span class="step-week">WEEK 1-2</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">実装（認証・DB・API・通知）</div>
+            <div class="step-desc">Gitブランチ運用のもとで機能ごとに実装し、Pull Requestで進行を可視化します。</div>
+            <span class="step-week">WEEK 2-4</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">テスト・品質確認</div>
+            <div class="step-desc">動作確認・修正対応を行い、可読性とメンテナンス性を最終チェックします。</div>
+            <span class="step-week">WEEK 4-5</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">リリース対応・継続運用</div>
+            <div class="step-desc">APK/AAB生成、Play Console申請を行い、リリース後も継続的にサポートします。</div>
+            <span class="step-week">WEEK 5〜</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="closing">
+    <div class="closing-inner">
+      <h2>まずは、要件の整理からご一緒しませんか。</h2>
+      <p>
+        単発の実装ではなく、長期的に頼れる開発パートナーをお探しとのこと。
+        Kairosは、今回のアプリ開発を最初のステップとして、
+        継続的なご相談をお受けできる体制で伺います。
+      </p>
+      <a href="mailto:contact@kairos-team.dev" class="cta-btn">Kairosに相談する →</a>
+      <div class="closing-sub">Kairos — Web制作・システム開発チーム</div>
+    </div>
+  </section>
+
+  <footer>
+    © Kairos Web制作・システム開発チーム — Proposal for Achisana
+  </footer>
+
+</body>
+</html>
